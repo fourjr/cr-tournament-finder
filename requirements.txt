@@ -1,0 +1,5 @@
+clashroyale
+python-dotenv
+aiohttp
+motor
+dnspython
