@@ -43,7 +43,7 @@ class Requester:
                     else:
                         self.log.info('Searched "{}"'.format(l))
                         break
-                await asyncio.sleep(0.2)
+                    await asyncio.sleep(0.2)
 
                 self.loop.create_task(self.parse_tournaments(tournaments))
 
@@ -68,20 +68,34 @@ class Requester:
             else:
                 auth = None
 
-            types = w.get('types', [])
+            types = w.get('filters', [])
             post = False
-            if 'all' in types or tournament.max_players in types:
+            filter_val = []
+            if 'all' in types:
                 # all
-                # 50, 100, 200, 1000
+                filter_val.append('all')
                 post = True
-            elif tournament.open and ('open:all' in types or 'open:{}'.format(tournament.max_players) in types):
+            if tournament.max_players in types:
+                # 50, 100, 200, 1000
+                filter_val.append(str(tournament.max_players))
+                post = True
+            if tournament.open and 'open:all' in types:
                 # open:all
+                filter_val.append('open:all')
+                post = True
+            if tournament.open and 'open:{}'.format(tournament.max_players) in types:
                 # open:50, open:100, open:200, open:1000
+                filter_val.append('open:{}'.format(tournament.max_players))
                 post = True
 
+            del tournament.raw_data['startTime']
+            del tournament.raw_data['endTime']
+            del tournament.raw_data['members']
+            tournament.raw_data['filters'] = filter_val
+
             if post:
-                await self.session.post(w.get('url'), json=tournament.raw_data, headers=auth)
-                self.log.info('POSTed to ' + w.get('url'))
+                async with self.session.post(w.get('url'), json=tournament.raw_data, headers=auth) as resp:
+                    self.log.info('POSTed to ' + w.get('url') + ': ' + resp.status)
             else:
                 self.log.info('Skipped POSTing to ' + w.get('url'))
 

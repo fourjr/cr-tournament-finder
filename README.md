@@ -12,7 +12,7 @@ Create a Github Issue with the JSON Structure. If you wish to keep your data pri
 ```json
 {
     "url": "https://url.com",
-    "type": ["all", 50, 100, 200, 1000, "open:all", "open:50", "open:100", "open:200", "open:1000"],
+    "filters": ["all", "50", "100", "200", "1000", "open:all", "open:50", "open:100", "open:200", "open:1000"],
     "app": "A brief description of your application",
     "authorization": "Value sent in the `Authorization` header. This is mostly used if you want your data to be private"
 }
@@ -31,11 +31,9 @@ The POST Request will contain JSON data of a typical tournament:
     "status": "inProgress",
     "createTime": 1534075854,
     "prepTime": 7200,
-    "startTime": null,
-    "endTime": null,
     "duration": 3600,
     "description": "Description",
     "updatedAt": 1534083832,
-    "members": []
+    "filters": ["tags", "applied"]
 },
 ```
