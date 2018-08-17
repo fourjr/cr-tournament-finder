@@ -63,8 +63,8 @@ class Requester:
         """Alerts all end developers with a POST"""
         async for w in self.mongo.tournaments.webhooks.find():
             # Types: all, 50, 100, 200, 1000, open:all, open:50, open:100, open:200, open:1000
-            if w.get('auth'):
-                auth = {'Authorization': w.get('auth')}
+            if w.get('authorization'):
+                auth = {'Authorization': w.get('authorization')}
             else:
                 auth = None
 
