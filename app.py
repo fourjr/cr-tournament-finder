@@ -95,9 +95,9 @@ class Requester:
 
             if post:
                 async with self.session.post(w.get('url'), json=tournament.raw_data, headers=auth) as resp:
-                    self.log.info('POSTed to ' + w.get('url') + ': ' + resp.status)
+                    self.log.info('POSTed to {}: {}'.format(w.get('url'), resp.status))
             else:
-                self.log.info('Skipped POSTing to ' + w.get('url'))
+                self.log.info('Skipped POSTing to {}'.format(w.get('url')))
 
 
 if __name__ == '__main__':
