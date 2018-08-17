@@ -2,7 +2,7 @@
 
 This project queries [RoyaleAPI](https://docs.royaleapi.com) and finds tournaments.
 
-When a new tournament is found, it will send a `POST` request to URLs that have subscribed to the `type`.
+When a new tournament is found, it will send a `POST` request to URLs that have subscribed to the appropriate `filter`.
 
 ## Subscribing
 
