@@ -70,23 +70,20 @@ class Requester:
 
             types = w.get('filters', [])
             post = False
-            filter_val = []
-            if 'all' in types:
+            filter_val = ['all', str(tournament.max_players)]
+
+            if 'all' in types or tournament.max_players in types:
                 # all
-                filter_val.append('all')
-                post = True
-            if tournament.max_players in types:
                 # 50, 100, 200, 1000
-                filter_val.append(str(tournament.max_players))
                 post = True
-            if tournament.open and 'open:all' in types:
-                # open:all
+
+            if tournament.open:
                 filter_val.append('open:all')
-                post = True
-            if tournament.open and 'open:{}'.format(tournament.max_players) in types:
-                # open:50, open:100, open:200, open:1000
                 filter_val.append('open:{}'.format(tournament.max_players))
-                post = True
+                if 'open:all' in types or 'open:{}'.format(tournament.max_players) in types:
+                    # open:all
+                    # open:50, open:100, open:200, open:1000
+                    post = True
 
             del tournament.raw_data['startTime']
             del tournament.raw_data['endTime']
