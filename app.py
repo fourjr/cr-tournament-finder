@@ -43,7 +43,7 @@ class Requester:
                     else:
                         self.log.info('Searched "{}"'.format(l))
                         break
-                    await asyncio.sleep(0.2)
+                    await asyncio.sleep(0.3)
 
                 self.loop.create_task(self.parse_tournaments(tournaments))
 
