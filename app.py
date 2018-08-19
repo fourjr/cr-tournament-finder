@@ -25,12 +25,13 @@ class Requester:
             self.close()
 
     def close(self):
+        self.loop.run_until_complete(asyncio.gather(*asyncio.Task.all_tasks()))
         self.loop.stop()
         self.loop.run_until_complete(self.loop.shutdown_asyncgens())
+        self.loop.run_until_complete(self.session.close())
         self.loop.close()
 
     async def poll(self):
-        print('Application INIT')
         while not self.is_closed:
             for l in string.ascii_lowercase:
                 while not self.is_closed:
