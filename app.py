@@ -44,7 +44,7 @@ class Requester:
                     else:
                         self.log.info('Searched "{}"'.format(l))
                         break
-                    await asyncio.sleep(0.3)
+                    await asyncio.sleep(0.6)
 
                 self.loop.create_task(self.parse_tournaments(tournaments))
 
@@ -54,11 +54,16 @@ class Requester:
             tournaments = [tournaments]
         for t in tournaments:
             data = await self.mongo.tournaments.data.find_one({'tag': t.tag})
-            if not data:
+            if data is None:
                 # Data is new
-                self.log.info('New tournament found: {}'.format(t.tag))
                 await self.mongo.tournaments.data.insert_one({'tag': t.tag})
-                self.loop.create_task(self.alert_webhook(t))
+                tournament = await self.client.search_tournaments(name=t.tag)
+                if tournament.max_players == tournament.current_players:
+                    self.log.info('New tournament found: {} - FULL'.format(t.tag))
+                    continue
+
+                self.log.info('New tournament found: {}'.format(t.tag))
+                await self.alert_webhook(t)
 
     async def alert_webhook(self, tournament):
         """Alerts all end developers with a POST"""
