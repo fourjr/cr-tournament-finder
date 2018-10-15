@@ -57,7 +57,7 @@ class Requester:
             if data is None:
                 # Data is new
                 await self.mongo.tournaments.data.insert_one({'tag': t.tag})
-                tournament = await self.client.search_tournaments(name=t.tag)
+                tournament = await self.client.get_tournament(t.tag)
                 if tournament.max_players == tournament.current_players:
                     self.log.info('New tournament found: {} - FULL'.format(t.tag))
                     continue
