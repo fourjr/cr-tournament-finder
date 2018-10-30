@@ -1,4 +1,4 @@
-clashroyale
+clashroyale==3.5.17
 python-dotenv
 aiohttp
 motor

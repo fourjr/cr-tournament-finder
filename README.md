@@ -1,7 +1,5 @@
 # Clash Royale Tournament Finder
 
-This project queries [RoyaleAPI](https://docs.royaleapi.com) and finds tournaments.
-
 When a new tournament is found, it will send a `POST` request to URLs that have subscribed to the appropriate `filter`.
 
 ## Subscribing
@@ -25,15 +23,14 @@ The POST Request will contain JSON data of a typical tournament:
 {
     "tag": "Tag",
     "name": "Name",
-    "open": false,
-    "maxPlayers": 50,
-    "currentPlayers": 11,
+    "type": "open",
+    "creatorTag": "#XXXXX",
+    "capacity": 50,
+    "maxCapacity": 11,
     "status": "inProgress",
-    "createTime": 1534075854,
-    "prepTime": 7200,
+    "createdTime": "20181030T055803.000Z",
+    "preparationDuration": 7200,
     "duration": 3600,
-    "description": "Description",
-    "updatedAt": 1534083832,
     "filters": ["tags", "applied"]
 },
 ```
