@@ -7,6 +7,7 @@ import sys
 
 import aiohttp
 import clashroyale
+import random
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
 
@@ -114,11 +115,12 @@ class Requester:
             del raw_data['membersList']
             raw_data['filters'] = filter_val
 
+            url = random.choice(w['url'])
             if post:
-                async with self.session.post(w.get('url'), json=raw_data, headers=auth) as resp:
-                    self.log.info('POSTed to {}: {}'.format(w.get('url'), resp.status))
+                async with self.session.post(url, json=raw_data, headers=auth) as resp:
+                    self.log.info('POSTed to {}: {}'.format(url, resp.status))
             else:
-                self.log.info('Skipped POSTing to {}'.format(w.get('url')))
+                self.log.info('Skipped POSTing to {}'.format(url))
 
 
 if __name__ == '__main__':

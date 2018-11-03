@@ -9,7 +9,7 @@ Create a Github Issue with the JSON Structure. If you wish to keep your data pri
 ### JSON Structure
 ```json
 {
-    "url": "https://url.com",
+    "url": ["https://url.com"],
     "filters": ["all", "50", "100", "200", "1000", "open:all", "open:50", "open:100", "open:200", "open:1000"],
     "app": "A brief description of your application",
     "authorization": "Value sent in the `Authorization` header. This is mostly used if you want your data to be private"
